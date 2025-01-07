@@ -206,3 +206,22 @@ Routes:
 /about: Displays the About component.
 
 ******************************************************************************************************
+
+Explanation of Changes
+window.confirm():
+
+This method displays a confirmation dialog box with OK and Cancel options.
+If the user clicks OK, the function returns true, and we proceed with deleting the post.
+If the user clicks Cancel, the function returns false, and the post is not deleted.
+deletePost function:
+
+When the delete button is clicked, the deletePost function is called with the post's ID.
+The window.confirm() dialog box asks the user for confirmation.
+If the user confirms the deletion, the post is removed from the posts state.
+Test the Confirmation
+Click the Delete Post button for any post.
+A confirmation dialog will appear asking: "Are you sure you want to delete this post?"
+If the user clicks OK, the post is deleted.
+If the user clicks Cancel, nothing happens, and the post remains in the list.
+
+******************************************************************************************************

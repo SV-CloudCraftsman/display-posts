@@ -55,10 +55,15 @@ const PostList = () => {
     setNewPost((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Delete a post
+  // Delete a post with confirmation
   const deletePost = (id) => {
-    const updatedPosts = posts.filter((post) => post.id !== id);
-    setPosts(updatedPosts);
+    // Ask the user for confirmation
+    const confirmDelete = window.confirm('Are you sure you want to delete this post?');
+
+    if (confirmDelete) {
+      const updatedPosts = posts.filter((post) => post.id !== id);
+      setPosts(updatedPosts);
+    }
   };
 
   if (loading) {
