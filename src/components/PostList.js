@@ -5,6 +5,7 @@ import Spinner from './Spinner';
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [newPost, setNewPost] = useState({ title: '', body: '' });
 
   // Fetch posts from API
   const fetchPosts = () => {
@@ -30,6 +31,30 @@ const PostList = () => {
     fetchPosts();
   }, []);
 
+  // Handle form submission to add a new post
+  const addPost = (e) => {
+    e.preventDefault(); // Prevent page reload
+    if (newPost.title.trim() === '' || newPost.body.trim() === '') {
+      alert('Please fill out both fields.');
+      return;
+    }
+
+    const newPostObject = {
+      id: posts.length + 1, // Temporary ID for demo purposes
+      title: newPost.title,
+      body: newPost.body,
+    };
+
+    setPosts([newPostObject, ...posts]); // Add new post to the top of the list
+    setNewPost({ title: '', body: '' }); // Reset form
+  };
+
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewPost((prev) => ({ ...prev, [name]: value }));
+  };
+
   // Delete a post
   const deletePost = (id) => {
     const updatedPosts = posts.filter((post) => post.id !== id);
@@ -43,9 +68,34 @@ const PostList = () => {
   return (
     <div>
       <h2>Posts</h2>
-      <button onClick={fetchPosts} style={buttonStyle}>
+
+      {/* Form to Add a New Post */}
+      <form onSubmit={addPost} style={formStyle}>
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          value={newPost.title}
+          onChange={handleInputChange}
+          style={inputStyle}
+        />
+        <textarea
+          name="body"
+          placeholder="Body"
+          value={newPost.body}
+          onChange={handleInputChange}
+          style={{ ...inputStyle, height: '80px' }}
+        />
+        <button type="submit" style={buttonStyle}>
+          Add Post
+        </button>
+      </form>
+
+      <button onClick={fetchPosts} style={{ ...buttonStyle, marginBottom: '10px' }}>
         Refresh Posts
       </button>
+
+      {/* Render Posts */}
       {posts.map((post) => (
         <PostItem
           key={post.id}
@@ -59,9 +109,22 @@ const PostList = () => {
   );
 };
 
-// Button style
+// Styles
+const formStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  marginBottom: '20px',
+};
+
+const inputStyle = {
+  marginBottom: '10px',
+  padding: '10px',
+  fontSize: '16px',
+  border: '1px solid #ccc',
+  borderRadius: '5px',
+};
+
 const buttonStyle = {
-  margin: '10px 0',
   padding: '10px 20px',
   backgroundColor: '#007BFF',
   color: '#fff',
