@@ -189,3 +189,20 @@ Spinner:
 The loading spinner uses spinner-border for a professional Bootstrap animation.
 
 ******************************************************************************************************
+
+How It Works
+React Router Setup:
+
+The Router component wraps the entire application.
+The Routes component contains individual Route components for each page.
+Navigation Bar:
+
+The Link component is used to navigate between routes without reloading the page.
+Styled using Bootstrap’s navbar classes.
+Routes:
+
+/: Displays the Home component.
+/posts: Displays the PostList component.
+/about: Displays the About component.
+
+******************************************************************************************************
