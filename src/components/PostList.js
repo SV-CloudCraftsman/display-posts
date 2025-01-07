@@ -6,19 +6,23 @@ const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newPost, setNewPost] = useState({ title: '', body: '' });
+  const [page, setPage] = useState(1); // Current page
+  const [totalPages, setTotalPages] = useState(0); // Total number of pages
 
-  // Fetch posts from API
-  const fetchPosts = () => {
+  // Fetch posts with pagination
+  const fetchPosts = (page) => {
     setLoading(true);
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    fetch(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10`)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        // Extract total posts count from the response headers
+        const totalPosts = response.headers.get('x-total-count');
+        setTotalPages(Math.ceil(totalPosts / 10)); // Assuming 10 posts per page
+
+        // Return the response JSON data
         return response.json();
       })
       .then((data) => {
-        setPosts(data.slice(0, 10)); // Limit to 10 posts
+        setPosts(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -28,8 +32,8 @@ const PostList = () => {
   };
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    fetchPosts(page);
+  }, [page]); // Fetch posts whenever the page changes
 
   // Handle form submission to add a new post
   const addPost = (e) => {
@@ -57,7 +61,6 @@ const PostList = () => {
 
   // Delete a post with confirmation
   const deletePost = (id) => {
-    // Ask the user for confirmation
     const confirmDelete = window.confirm('Are you sure you want to delete this post?');
 
     if (confirmDelete) {
@@ -101,10 +104,6 @@ const PostList = () => {
         </button>
       </form>
 
-      <button onClick={fetchPosts} className="btn btn-secondary mb-4">
-        Refresh Posts
-      </button>
-
       {/* Render Posts */}
       <div className="row">
         {posts.map((post) => (
@@ -117,6 +116,27 @@ const PostList = () => {
             />
           </div>
         ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="d-flex justify-content-between">
+        <button
+          className="btn btn-secondary"
+          onClick={() => setPage(Math.max(1, page - 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          className="btn btn-secondary"
+          onClick={() => setPage(Math.min(totalPages, page + 1))}
+          disabled={page === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

@@ -225,3 +225,28 @@ If the user clicks OK, the post is deleted.
 If the user clicks Cancel, nothing happens, and the post remains in the list.
 
 ******************************************************************************************************
+
+Explanation of Changes
+State Variables:
+
+page: Tracks the current page number.
+totalPages: Stores the total number of pages (calculated based on the number of posts divided by the number of posts per page).
+Pagination Logic:
+
+The fetchPosts function now accepts a page argument and fetches the posts for that page.
+We are using the ?_page and ?_limit query parameters to fetch posts page by page.
+The totalPosts is extracted from the X-Total-Count response header to calculate totalPages.
+Pagination Controls:
+
+"Previous" and "Next" buttons allow navigation between pages.
+The Previous button is disabled if the user is on the first page.
+The Next button is disabled if the user is on the last page.
+Effect Hook:
+
+The useEffect hook now listens to changes in the page state, so the posts are fetched each time the page changes.
+How It Works
+First load: When the component is first loaded, the posts from the first page are fetched (?_page=1&_limit=10).
+Pagination: When you click Next or Previous, the page state is updated, triggering a new fetch to get the posts for that page.
+Buttons: The "Previous" and "Next" buttons allow you to navigate between the pages of posts.
+
+******************************************************************************************************
