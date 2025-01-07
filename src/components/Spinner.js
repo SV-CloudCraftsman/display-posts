@@ -2,9 +2,9 @@ import React from 'react';
 
 const Spinner = () => {
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
-      <div className="spinner" style={{ fontSize: '24px', color: '#888' }}>
-        Loading...
+    <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
       </div>
     </div>
   );

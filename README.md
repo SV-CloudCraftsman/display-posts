@@ -171,3 +171,21 @@ Styling: Use CSS or frameworks like Bootstrap to make it look better.
 React Router: Add navigation between pages.
 
 ******************************************************************************************************
+
+Bootstrap Enhancements
+Form:
+
+The form fields (input and textarea) now use form-control for consistent styling.
+The Add Post button uses btn btn-primary for a Bootstrap-styled button.
+Post List:
+
+Posts are displayed as Bootstrap cards (card component) with shadow styling.
+Posts are placed in a responsive grid layout (row and col-md-6).
+Refresh Button:
+
+Styled with btn btn-secondary for a distinct look.
+Spinner:
+
+The loading spinner uses spinner-border for a professional Bootstrap animation.
+
+******************************************************************************************************

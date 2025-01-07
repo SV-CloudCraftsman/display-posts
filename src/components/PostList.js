@@ -66,71 +66,55 @@ const PostList = () => {
   }
 
   return (
-    <div>
-      <h2>Posts</h2>
+    <div className="container mt-4">
+      <h2 className="mb-4">Posts</h2>
 
       {/* Form to Add a New Post */}
-      <form onSubmit={addPost} style={formStyle}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={newPost.title}
-          onChange={handleInputChange}
-          style={inputStyle}
-        />
-        <textarea
-          name="body"
-          placeholder="Body"
-          value={newPost.body}
-          onChange={handleInputChange}
-          style={{ ...inputStyle, height: '80px' }}
-        />
-        <button type="submit" style={buttonStyle}>
+      <form onSubmit={addPost} className="mb-4">
+        <div className="mb-3">
+          <input
+            type="text"
+            name="title"
+            className="form-control"
+            placeholder="Enter title"
+            value={newPost.title}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mb-3">
+          <textarea
+            name="body"
+            className="form-control"
+            placeholder="Enter body"
+            value={newPost.body}
+            onChange={handleInputChange}
+            rows="3"
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
           Add Post
         </button>
       </form>
 
-      <button onClick={fetchPosts} style={{ ...buttonStyle, marginBottom: '10px' }}>
+      <button onClick={fetchPosts} className="btn btn-secondary mb-4">
         Refresh Posts
       </button>
 
       {/* Render Posts */}
-      {posts.map((post) => (
-        <PostItem
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          body={post.body}
-          onDelete={deletePost}
-        />
-      ))}
+      <div className="row">
+        {posts.map((post) => (
+          <div key={post.id} className="col-md-6 mb-4">
+            <PostItem
+              id={post.id}
+              title={post.title}
+              body={post.body}
+              onDelete={deletePost}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
-
-// Styles
-const formStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  marginBottom: '20px',
-};
-
-const inputStyle = {
-  marginBottom: '10px',
-  padding: '10px',
-  fontSize: '16px',
-  border: '1px solid #ccc',
-  borderRadius: '5px',
-};
-
-const buttonStyle = {
-  padding: '10px 20px',
-  backgroundColor: '#007BFF',
-  color: '#fff',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer',
 };
 
 export default PostList;
